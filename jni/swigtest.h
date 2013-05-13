@@ -1,5 +1,11 @@
 /* File : example.h */
 
+
+#include <list>
+
+namespace swigtest {
+
+
 class Shape {
 public:
   Shape() {
@@ -27,6 +33,14 @@ class Circle : public Shape {
 private:
   double radius;
   Callback* cb_;
+  class TestCallback : public Callback{
+   public:
+	  TestCallback(Callback* cb):ccb_(cb){};
+	  virtual void onChanged(Shape* shape);
+   private:
+	  Callback* ccb_;
+  };
+
 public:
 //  Circle(double r) : radius(r) { };
   Circle(double r, Callback* cb) : radius(r),cb_(cb) { };
@@ -45,3 +59,28 @@ public:
   virtual double area(void);
   virtual double perimeter(void);
 };
+
+template <class T> class ShapesMgr {
+private:
+	ShapesMgr<T>(){
+		shapelist_ = new std::list<T*>();
+	};
+	~ShapesMgr<T>(){};
+
+	std::list<T*>* shapelist_;
+public:
+	static ShapesMgr<T>* createMgr() {
+		ShapesMgr<T> * mgr = new ShapesMgr<T>();
+		return mgr;
+	}
+	T* getFirstOBJ(){
+		return shapelist_->front();
+	}
+	void add(T* obj){
+		shapelist_->push_back(obj);
+	}
+};
+
+
+
+}

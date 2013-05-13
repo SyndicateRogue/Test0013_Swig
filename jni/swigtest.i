@@ -6,11 +6,12 @@
 %}
 
 %feature("director") Callback;
-
 /* Let's just grab the original header file here */
 
+ 
 %include "swigtest.h"
-
+%template(CircleMgr) swigtest::ShapesMgr<swigtest::Circle>;
+%template(SquareMgr) swigtest::ShapesMgr<swigtest::Square>;
 
 %pragma(java) jniclasscode=%{
   static {

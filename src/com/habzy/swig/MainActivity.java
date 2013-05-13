@@ -26,6 +26,13 @@ public class MainActivity extends Activity {
         Log.d(TAG, "===Before mCircle.setR(30)");
         mCircle.setR(30);
         Log.d(TAG, "===After  mCircle.setR(30)");
+        
+        CircleMgr mgr = CircleMgr.createMgr();
+        mgr.add(new Circle(1, new CircleCallback()));
+        mgr.add(mCircle);
+        Circle circle= mgr.getFirstOBJ();
+        
+        Log.d(TAG, "===mgr.getFirstOBJ():"+circle.area());
     }
 
     private class CircleCallback extends Callback {
@@ -36,7 +43,7 @@ public class MainActivity extends Activity {
          */
         @Override
         public void onChanged(Shape shape) {
-            Log.d("CircleCallback", "===java-onChanged. area:" + shape.area());
+            Log.d("CircleCallback", "===33333333333java-onChanged. area:" + shape.area());
         }
     }
 

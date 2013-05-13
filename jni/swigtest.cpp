@@ -1,11 +1,14 @@
 /* File : example.cpp */
 
 #include "swigtest.h"
+
+namespace swigtest {
+
 #define M_PI 3.14159265358979323846
 
 /* Move the shape to a new location */
 void Shape::move(double dx, double dy) {
-  x += dx;
+  x = dx;
   y += dy;
 }
 
@@ -21,9 +24,8 @@ double Circle::perimeter(void) {
 
 void Circle::setR(double r) {
 	radius = r;
-	if (cb_) {
-		cb_->onChanged((Shape*)this);
-	}
+	TestCallback * cb = new TestCallback(cb_);
+	cb->onChanged((Shape*)this);
 }
 
 double Square::area(void) {
@@ -32,4 +34,10 @@ double Square::area(void) {
 
 double Square::perimeter(void) {
   return 4*width;
+}
+
+void Circle::TestCallback::onChanged(Shape* shape){
+	ccb_->onChanged(shape);
+}
+
 }
